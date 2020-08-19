@@ -1,0 +1,58 @@
+#############################################################################
+# Tables that are extended
+#############################################################################
+config.tx_extbase {
+    persistence {
+        classes {
+
+            RKW\RkwAjax\Domain\Model\Content {
+                mapping {
+                    tableName = tt_content
+                    recordType =
+                }
+            }
+        }
+    }
+}
+
+#############################################################################
+# Configuration
+#############################################################################
+plugin.tx_rkwajax {
+    view {
+        templateRootPath = {$plugin.tx_rkwajax.view.templateRootPath}
+        partialRootPath = {$plugin.tx_rkwajax.view.partialRootPath}
+        layoutRootPath = {$plugin.tx_rkwajax.view.layoutRootPath}
+    }
+
+    persistence {
+        storagePid = {$plugin.tx_rkwajax.persistence.storagePid}
+    }
+
+    features {
+        # uncomment the following line to enable the new Property Mapper.
+        # rewrittenPropertyMapper = 1
+    }
+
+    #===============================================================
+    # Settings
+    #===============================================================
+    settings {
+
+
+    }
+}
+
+
+#===============================================================
+# CSS
+#===============================================================
+plugin.tx_rkwajax._CSS_DEFAULT_STYLE (
+
+)
+
+
+#===============================================================
+# Includes
+#===============================================================
+<INCLUDE_TYPOSCRIPT: source="DIR:./Includes" extensions="typoscript">
