@@ -29,8 +29,9 @@ use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @api
+ * @deprecated
  */
-class StandaloneView extends \TYPO3\CMS\Fluid\View\StandaloneView
+class AjaxStandaloneView extends \TYPO3\CMS\Fluid\View\StandaloneView
 {
 
 

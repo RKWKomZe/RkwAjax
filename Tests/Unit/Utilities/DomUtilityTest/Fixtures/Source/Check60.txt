@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<title>Test</title>
+	</head>
+	<body>
+		<div class="flex-container introtext">
+			<h3 class="mt-2 headline headline--underlined">
+				Neues äus dem RKW Kompetenzzentrüm - mit deutschen Umlauten ß!
+			</h3>
+
+			<div class="flex-container" aria-live="assertive" aria-atomic="true" role="main" id="773bc02ea02b903280d609bb6a883735afbd7f14-1" data-rkwajax-id="1" data-rkwajax-action="replace">
+				<div class="tiles-wrapper">
+					<div class="tiles flex-container flex-container--margin" id="773bc02ea02b903280d609bb6a883735afbd7f14-2" data-rkwajax-id="2" data-rkwajax-action="append">
+						<div class="flex-item flex-basis-3">
+						    Neues äus dem RKW Kompetenzzentrüm - mit deutschen Umlauten ß!
+							<img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" alt="Image" srcset="typo3temp/assets/_processed_/8/4/csm_bmwi-logo2_3ecba3f64c.png">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
+</html>

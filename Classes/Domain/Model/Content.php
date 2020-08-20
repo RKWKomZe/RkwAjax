@@ -26,5 +26,19 @@ namespace RKW\RkwAjax\Domain\Model;
 class Content extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
 
+    /**
+     *
+     * @var string
+     */
+    protected $piFlexform;
 
+    /**
+     * Returns the piFlexform
+     *
+     * @return string piFlexform
+     */
+    public function getPiFlexform()
+    {
+        return $this->piFlexform;
+    }
 }
