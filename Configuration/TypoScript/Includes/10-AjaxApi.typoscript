@@ -1,6 +1,6 @@
 
 # Add jquery if not disabled
-[globalVar = LIT:1 = {$plugin.tx_rkwajax.settings.includeJQuery}]
+[globalVar = LIT:1 = {$plugin.tx_rkwajax.settings.includeJQuery}] || [globalVar = LIT:1 = {$plugin.tx_rkwbasics.settings.includeJQuery}]
     page.includeJSFooterlibs.rkwAjaxJQuery = EXT:rkw_ajax/Resources/Public/Js/jQuery-2.2.4-min.js
 [global]
 [globalVar = LIT:1 = {$plugin.tx_rkwajax.settings.includeJQuery}] && [globalVar = LIT:1 = {$plugin.tx_rkwajax.settings.includeAjaxApiJs2}]
@@ -8,7 +8,7 @@
 [global]
 
 # Add JS for Ajax-API
-[globalVar = LIT:1 = {$plugin.tx_rkwajax.settings.includeAjaxApiJs}]
+[globalVar = LIT:1 = {$plugin.tx_rkwajax.settings.includeAjaxApiJs}] || [globalVar = LIT:1 = {$plugin.tx_rkwbasics.settings.includeAjaxApiJs}]
     page.includeJSFooter.rkwAjaxJsApi = EXT:rkw_ajax/Resources/Public/Js/AjaxApi-1.0.js
 [global]
 [globalVar = LIT:1 = {$plugin.tx_rkwajax.settings.includeAjaxApiJs2}]

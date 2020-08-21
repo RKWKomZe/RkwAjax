@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Service\FlexFormService;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-
+use RKW\RkwAjax\Domain\Repository\ContentRepository;
 
 /**
  * Class AjaxAbstractController
@@ -53,6 +53,7 @@ abstract class AjaxAbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\
     protected $ajaxHelper;
 
 
+
     /**
      * @param ConfigurationManagerInterface $configurationManager
      */
@@ -67,7 +68,10 @@ abstract class AjaxAbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\
         ){
 
             /** @var \RKW\RkwAjax\Domain\Model\Content content */
-            if ($content = $this->contentRepository->findByIdentifier($this->ajaxHelper->getContentUid())) {
+            if (
+                ($this->contentRepository)
+                && ($content = $this->contentRepository->findByIdentifier($this->ajaxHelper->getContentUid()))
+            ){
                 $flexFormData = $content->getPiFlexform();
             }
         }
