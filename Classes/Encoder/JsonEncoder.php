@@ -28,44 +28,35 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class JsonEncoder extends AbstractJsonEncoder
 {
 
-    /**
-     * List of allowed tags
-     *
-     * @const array
-     */
-    const ALLOWED_TAGS = [
-        'div',
-        'form',
-    ];
-
 
     /**
-     * Sets HTML by included ajax attributes
+     * Sets HTML by given list of ids in DOM
      *
      * @param string $html
+     * @param array $idList
+     * @param string $idPrefix
      * @return $this
      * @throws \TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException
      */
-    public function setHtmlByAjaxAttributes($html = '')
+    public function setHtmlByDom($html, array $idList, $idPrefix = '')
     {
-
         /** @var DomUtility $domUtility */
         $domUtility = GeneralUtility::makeInstance(DomUtility::class);
-        $elementList = $domUtility->getElementsByAjaxAttributes($html);
 
-        // now build HTML-array based on data
-        /** @var \DOMElement $element */
-        foreach ($elementList as $element) {
+        // now get contents for all given ids
+        foreach ($idList as $id) {
+
+            $finalId = $idPrefix . '-' . $id;
+            $element = $domUtility::getElementById($html, $finalId);
 
             if ($element instanceof \DOMElement) {
                 $type = $element->getAttribute('data-rkwajax-action');
-                $id = $element->getAttribute('id');
                 $finalType = 'replace';
                 if (in_array(strtolower($type), array('append', 'prepend', 'replace'))) {
                     $finalType = strtolower($type);
                 }
 
-                $this->html[$id][$finalType] = $domUtility->getInnerHTML($element);
+                $this->html[$finalId][$finalType] = $domUtility::getInnerHTML($element);
             }
         }
 

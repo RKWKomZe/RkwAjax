@@ -29,10 +29,39 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class AjaxHelper
 {
 
+    const PAGE_TYPE = 250;
+
+
     /**
+     * Checks if it was an Ajax-call
+     *
+     * @var bool
+     */
+    protected $isAjaxCall;
+
+
+    /**
+     * Unique key
+     *
+     * @var string
+     */
+    protected $key;
+
+
+    /**
+     * Uid of content element using Ajax
+     *
      * @var int
      */
     protected $contentUid;
+
+
+    /**
+     * Array of ids from elements in DOM to change via Ajax
+     *
+     * @var array
+     */
+    protected $idList;
 
 
     /**
@@ -42,6 +71,32 @@ class AjaxHelper
     protected $configurationManager;
 
 
+
+    /**
+     * Checks if was an ajaxCall
+     *
+     * @return bool
+     */
+    public function isAjaxCall ()
+    {
+        return boolval($this->isAjaxCall);
+    }
+
+
+    /**
+     * Gets the key
+     *
+     * @return string
+     */
+    public function getKey ()
+    {
+        if (! $this->key) {
+            $this->key = sha1($this->getContentUid());
+        }
+        return $this->key;
+    }
+
+
     /**
      * Gets the contentUid
      *
@@ -49,29 +104,62 @@ class AjaxHelper
      */
     public function getContentUid ()
     {
-        if (! $this->contentUid) {
-
-            if (
-                ($this->configurationManager)
-                && ($this->configurationManager->getContentObject())
-            ){
-                $this->contentUid = intval($this->configurationManager->getContentObject()->data['uid']);
-            }
-            if (GeneralUtility::_GP('ajaxContentUid')) {
-                $this->contentUid = intval(GeneralUtility::_GP('ajaxContentUid'));
-            }
-        }
-        return $this->contentUid;
+        return intval($this->contentUid);
     }
 
 
     /**
-     * gets identifier
+     * Gets the idList
      *
-     * @return string
+     * @return array
      */
-    public function getKey ()
+    public function getIdList ()
     {
-        return sha1($this->getContentUid());
+        return $this->idList;
+    }
+
+
+
+    /**
+     * Init values based on GET-Params or on given param
+     *
+     * @param array $settings
+     */
+    public function init (array $settings = [])
+    {
+
+        if (GeneralUtility::_GP('rkw_ajax')) {
+            $settings = GeneralUtility::_GP('rkw_ajax');
+
+            if (
+                (GeneralUtility::_GP('type') == self::PAGE_TYPE)
+                || (GeneralUtility::_GP('typeNum') == self::PAGE_TYPE)
+            ){
+                $this->isAjaxCall = true;
+            }
+        }
+
+        if ($settings) {
+            if ($contentUid = $settings['cid']) {
+                $this->contentUid = $contentUid;
+            }
+            if ($key = $settings['key']) {
+                $this->key = $key;
+            }
+            if ($idList = GeneralUtility::trimExplode(',', $settings['idl'])) {
+                $this->idList = $idList;
+            }
+        }
+    }
+
+
+    /**
+     * Constructor
+     *
+     * @param array $settings
+     */
+    public function __construct(array $settings = [])
+    {
+        $this->init($settings);
     }
 }

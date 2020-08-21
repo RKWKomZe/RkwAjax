@@ -91,6 +91,14 @@ abstract class AjaxAbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\
      */
     protected function initializeView(ViewInterface $view)
     {
+        if (
+            ($this->configurationManager)
+            && ($this->configurationManager->getContentObject())
+        ){
+            $contentUid = intval($this->configurationManager->getContentObject()->data['uid']);
+            $this->ajaxHelper->init(['cid' => $contentUid]);
+        }
+
         $view->assign('ajaxHelper', $this->ajaxHelper);
     }
 

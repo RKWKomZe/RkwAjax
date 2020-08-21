@@ -94,7 +94,7 @@ class AjaxWrapperViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
 
         /** @var DomUtility  $domUtility */
         $domUtility = GeneralUtility::makeInstance(DomUtility::class);
-        return $domUtility->setAjaxAttributesToElements($value, $ajaxHelper, $ajaxId, $ajaxAction);
+        return $domUtility::setAjaxAttributesToElements($value, $ajaxHelper, $ajaxId, $ajaxAction);
     }
 
 }
