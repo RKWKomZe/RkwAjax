@@ -14,3 +14,22 @@
 [globalVar = LIT:1 = {$plugin.tx_rkwajax.settings.includeAjaxApiJs2}]
     page.includeJSFooter.rkwAjaxJsApi = EXT:rkw_ajax/Resources/Public/Js/AjaxApi-2.0.js
 [global]
+
+
+txRkwAjaxPage = PAGE
+txRkwAjaxPage {
+	typeNum = 250
+	config {
+
+		disableAllHeaderCode = 1
+		xhtml_cleaning = 0
+		admPanel = 0
+		no_cache = 0
+		debug = 0
+		index_enable = 0
+		index_metatags = 0
+		index_externals = 0
+	}
+
+	10 < page.10
+}

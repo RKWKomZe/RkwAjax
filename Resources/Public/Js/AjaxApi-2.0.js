@@ -107,7 +107,7 @@
         var url = this.settings.url;
         var data = this.getFormValues();
         // Add typeNum to data array
-        data.unshift({ name: "typeNum", value: 250 });
+        data.unshift({ name: "type", value: 250 });
 
         this.ajaxRequest(url, data);
       }
@@ -137,6 +137,7 @@
 
       var url = this.settings.url;
       var data = [];
+      data.unshift({ name: "type", value: 250 });
 
       if (!this.settings.$el.hasClass("is-disabled")) {
         this.ajaxRequest(url, data);
@@ -149,7 +150,7 @@
       var data = field.serializeArray();
 
       // Add typeNum to data array
-      data.unshift({ name: "typeNum", value: 250 });
+      data.unshift({ name: "type", value: 250 });
 
       this.ajaxRequest(url, data);
     },
@@ -170,7 +171,7 @@
       }
 
       // Add typeNum to data array
-      data.unshift({ name: "typeNum", value: 250 });
+      data.unshift({ name: "type", value: 250 });
 
       this.ajaxRequest(url, data);
     },

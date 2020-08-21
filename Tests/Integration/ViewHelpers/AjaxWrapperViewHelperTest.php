@@ -117,9 +117,10 @@ class AjaxWrapperViewHelperTest extends FunctionalTestCase
         * Then the wrapper gets an corresponding id-attribute set
         * Then the comment elements are set inside of it and wrap the whole innerHTML
         */
+        $_GET['rkwAjax']['contentUid'] = '55';
+        $this->ajaxHelper->init();
 
         $this->standAloneViewHelper->setTemplate('Check10.html');
-        $_GET['ajaxContentUid'] = '55';
         $this->standAloneViewHelper->assign('ajaxHelper', $this->ajaxHelper);
 
         $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check10.txt');
@@ -145,9 +146,10 @@ class AjaxWrapperViewHelperTest extends FunctionalTestCase
          * Then the wrapper gets an corresponding id-attribute set
          * Then the comment elements are set inside of it and wrap the whole innerHTML
          */
+        $_GET['rkwAjax']['contentUid'] = '55';
+        $this->ajaxHelper->init();
 
         $this->standAloneViewHelper->setTemplate('Check20.html');
-        $_GET['ajaxContentUid'] = '55';
         $this->standAloneViewHelper->assign('ajaxHelper', $this->ajaxHelper);
 
         $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check20.txt');
@@ -155,6 +157,7 @@ class AjaxWrapperViewHelperTest extends FunctionalTestCase
 
         static::assertEquals($expected, $result);
     }
+
 
     /**
      * @test

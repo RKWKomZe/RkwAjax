@@ -14,6 +14,10 @@ namespace RKW\RkwAjax\View;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Web\Response;
+use \TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+
 /**
  * Class AjaxView
  *
@@ -31,6 +35,25 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
      */
     protected $jsonEncoder;
 
+    /**
+     * @var \RKW\RkwAjax\Helper\AjaxHelper
+     * @inject
+     */
+    protected $ajaxHelper;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     */
+    protected $objectManager;
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+     */
+    public function injectObjectManager(ObjectManagerInterface $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
+
 
     /**
      * Loads the template source and render the template.
@@ -42,7 +65,39 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
      */
     public function render($actionName = null)
     {
-        /** @toDo: change rendering in Ajax-Context - preg_replace with ajax markers */
-        return parent::render($actionName);
+        $result = parent::render($actionName);
+        if (
+            ($this->ajaxHelper->isAjaxCall())
+            && ($ajaxKey = $this->ajaxHelper->getKey())
+            && ($ajaxContentUid = $this->ajaxHelper->getContentUid())
+            && ($ajaxIdList = $this->ajaxHelper->getIdList())
+        ) {
+
+            $json = $this->jsonEncoder->setHtmlByDom(
+                $result,
+                $ajaxIdList,
+                $ajaxKey
+            );
+
+            $this->sendResponse($json);
+            return '';
+        }
+
+        return $result;
+    }
+
+    /**
+     * Send response to browser
+     *
+     * @param string $data The response data
+     */
+    protected function sendResponse($data)
+    {
+        $response = $this->objectManager->get(Response::class);
+        $response->setHeader('Content-Type', 'application/json; charset=utf-8');
+        $response->setContent($data);
+        $response->sendHeaders();
+        $response->send();
+        exit;
     }
 }

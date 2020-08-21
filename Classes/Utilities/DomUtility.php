@@ -14,6 +14,7 @@ namespace RKW\RkwAjax\Utilities;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Masterminds\HTML5;
 use RKW\RkwAjax\Helper\AjaxHelper;
 
 /**
@@ -26,7 +27,6 @@ use RKW\RkwAjax\Helper\AjaxHelper;
  */
 class DomUtility
 {
-
 
     /**
      * List of allowed tags
@@ -48,7 +48,7 @@ class DomUtility
      * @param string $ajaxAction
      * @return string
      */
-    public function setAjaxAttributesToElements(
+    public static function setAjaxAttributesToElements(
         $html,
         AjaxHelper $ajaxHelper,
         $ajaxId,
@@ -56,13 +56,17 @@ class DomUtility
     ) {
 
         // load DOM without implied wrappers
-        @$dom = new \DOMDocument();
-        libxml_use_internal_errors(true);
-        $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        /** @var HTML5 $dom  */
+        $htmlObject = new HTML5(
+            [
+                'disable_html_ns' => true,
+            ]
+        );
+        $doc = $htmlObject->loadHTML($html);
 
         $firstWrap = null;
         foreach (self::ALLOWED_TAGS as $tag) {
-            if ($firstWrap = $dom->getElementsByTagName($tag)->item(0)) {
+            if ($firstWrap = $doc->getElementsByTagName($tag)->item(0)) {
                 break;
             }
         }
@@ -76,8 +80,8 @@ class DomUtility
             $firstWrap->setAttribute('data-rkwajax-action', $ajaxAction);
         }
 
-        /** @see: https://stackoverflow.com/questions/8218230/php-domdocument-loadhtml-not-encoding-utf-8-correctly */
-        return utf8_decode($dom->saveHTML($dom->documentElement));
+        // HTML-Tag is inserted automatically, therefore we return the innerHTML of it
+        return self::getInnerHtml($doc->getElementsByTagName('html')->item(0));
     }
 
 
@@ -88,14 +92,14 @@ class DomUtility
      * @param string $html
      * @return array
      */
-    public function getElementsByAjaxAttributes(
-        $html
-    ) {
+    public static function getElementsByAjaxAttributes($html) {
 
         // load DOM without implied wrappers
-        @$dom = new \DOMDocument();
-        libxml_use_internal_errors(true);
-        $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        /** @var HTML5 $dom  */
+        $htmlObject = new HTML5(
+            ['disable_html_ns' => true]
+        );
+        $doc = $htmlObject->loadHTML($html);
 
         $elementList = [];
 
@@ -104,7 +108,7 @@ class DomUtility
         foreach (self::ALLOWED_TAGS as $tag) {
 
             /** @var \DOMElement $element */
-            foreach($dom->getElementsByTagName($tag) as $element) {
+            foreach($doc->getElementsByTagName($tag) as $element) {
                 if (
                     ($element->hasAttribute('data-rkwajax-id'))
                     && ($element->hasAttribute('data-rkwajax-action'))
@@ -126,17 +130,18 @@ class DomUtility
      * @param string $id
      * @return \DOMElement|null
      */
-    public function getElementById(
+    public static function getElementById(
         $html,
         $id
     ) {
         // load DOM without implied wrappers
-        @$dom = new \DOMDocument();
-        libxml_use_internal_errors(true);
-        $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $htmlObject = new HTML5(
+            ['disable_html_ns' => true]
+        );
+        $doc = $htmlObject->loadHTML($html);
 
         /** @var \DOMElement $element */
-        if ($element = $dom->getElementById($id)) {
+        if ($element = $doc->getElementById($id)) {
             if (in_array($element->tagName, self::ALLOWED_TAGS)) {
                 return $element;
             }
@@ -152,15 +157,13 @@ class DomUtility
      * @param \DOMElement $element
      * @return string
      */
-    public function getInnerHtml(\DOMElement $element)
+    public static function getInnerHtml(\DOMElement $element)
     {
         $innerHtml = '';
         $children = $element->childNodes;
         foreach ($children as $child) {
-
-            /** @see: https://stackoverflow.com/questions/8218230/php-domdocument-loadhtml-not-encoding-utf-8-correctly */
-            $innerHtml .= utf8_decode($child->ownerDocument->saveHTML($child));
+            $innerHtml .= $child->ownerDocument->saveHTML($child);
         }
-        return $innerHtml;
+        return trim($innerHtml);
     }
 }
