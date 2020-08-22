@@ -60,30 +60,7 @@ abstract class AjaxAbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\
     public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
     {
         parent::injectConfigurationManager($configurationManager);
-
-        // load data from ContentObjectRender or via database
-        if (
-            (! $configurationManager->getContentObject())
-            || (! $flexFormData = $configurationManager->getContentObject()->data['pi_flexform'])
-        ){
-
-            /** @var \RKW\RkwAjax\Domain\Model\Content content */
-            if (
-                ($this->contentRepository)
-                && ($content = $this->contentRepository->findByIdentifier($this->ajaxHelper->getContentUid()))
-            ){
-                $flexFormData = $content->getPiFlexform();
-            }
-        }
-
-        // merge FlexForm settings with TypoScript settings
-        if ($flexFormData) {
-
-            /** @var FlexFormService $flexFormService */
-            $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
-            $flexFormSettings = $flexFormService->convertFlexFormContentToArray($flexFormData);
-            $this->settings = array_merge($this->settings, $flexFormSettings['settings']);
-        }
+        $this->loadSettingsFromFlexForm();
     }
 
 
@@ -107,5 +84,36 @@ abstract class AjaxAbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\
     }
 
 
+
+    /**
+     * Loads settings from Flexform and adds them to settings array
+     */
+    protected function loadSettingsFromFlexForm()
+    {
+
+        // load data from ContentObjectRender or via database
+        if (
+            (! $this->configurationManager->getContentObject())
+            || (! $flexFormData = $this->configurationManager->getContentObject()->data['pi_flexform'])
+        ){
+
+            /** @var \RKW\RkwAjax\Domain\Model\Content content */
+            if (
+                ($this->contentRepository)
+                && ($content = $this->contentRepository->findByIdentifier($this->ajaxHelper->getContentUid()))
+            ){
+                $flexFormData = $content->getPiFlexform();
+            }
+        }
+
+        // merge FlexForm settings with TypoScript settings
+        if ($flexFormData) {
+
+            /** @var FlexFormService $flexFormService */
+            $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+            $flexFormSettings = $flexFormService->convertFlexFormContentToArray($flexFormData);
+            $this->settings = array_merge($this->settings, $flexFormSettings['settings']);
+        }
+    }
 
 }
