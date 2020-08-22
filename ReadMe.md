@@ -28,7 +28,7 @@ http://rkw-kompetenzzentrum.rkw.local/?type=250
 
 ## Usage
 ### Basics
-First you will have to extend your `ActionContoller` from the `AjaxControllerAbstract`. This way the AJAX- functionality is added to you extension.
+First you will have to extend your `ActionContoller` from the `AjaxControllerAbstract`. This way the AJAX- functionality is added to your extension.
  ```
  class YourController extends \RKW\RkwAjax\Controller\AjaxAbstractController
  {
@@ -38,10 +38,10 @@ First you will have to extend your `ActionContoller` from the `AjaxControllerAbs
 Now that the basic functionality is available we can use it. 
 This is best explained using an example.
 ### Example
-Let's pretend you have an extension which
+Let's pretend you have an extension which:
  * renders a list of elements
  * a filter for this list
- * a more button for pagination
+ * a more-button for pagination
  
 The Fluid-code may look like this:
 ```
@@ -69,18 +69,18 @@ The Fluid-code may look like this:
 </div>            
 ```
 
-So we probably want to archive the following behavior
+So we probably want to archive the following behavior:
 * If the user filters the items of the list, the whole list should be refreshed via AJAX.
-* If the user clicks the more button, further items should be added to the list
-* In both cases the more button should be updated in order to have the correct page number as param
+* If the user clicks the more button, further items should be added to the list via AJAX.
+* In both cases the more-button should be updated via AJAX in order to have the correct page number as param.
 
 In order to archive this behavior we have to use the AjaxWrapper-ViewHelper. This ViewHelper marks the sections in your HTML that are to be used for Ajax. With it you can also define which action should take place.
-The AjaxWrapper-ViewHelper expects the following params
+The AjaxWrapper-ViewHelper expects the following params:
 * ajaxId: This is the internal ID you define in order to distinguish the sections you use from each other. You don't have to take care for namespaces. Just make sure each ID is numeric and is used only once across all your templates, partials and layouts.
 * ajaxAction: Here you define what will happen with the code inside the ViewHelper-Tag when loaded via Ajax. If you set the value to "replace" it  will replace existing content, if you set the value to "append" it will be added at the end of the existing content, and if you set the value to "prepend" it will be added before the existing content. 
 * ajaxHelper: Well, here you simply set the AjaxHelper-Object. 
 
-First, lets take a look at the changed code before we try to explain why we did it this way.
+First, lets take a look at the changed code before we try to explain why we did it this way:
 
 ```
 <div class="filters">
@@ -117,7 +117,7 @@ First, lets take a look at the changed code before we try to explain why we did 
 </rkwAjax:ajaxWrapper>           
 ```
  
-This will be code rendered to the frontend:
+This will be code rendered to the frontend like this:
 ``` 
 <div class="filters">
     <form>
@@ -148,10 +148,10 @@ This will be code rendered to the frontend:
  As you can see the AjaxWrapper-ViewHelpers will add some attributes to their first child elements. Note that these attributes will only be added to a defined set of valid HTML-tags (e.g. DIVs and FORMs).
  What did we do? We told the extension to:
  * Completely refresh the innerHTML of the DIV with the id "773bc02ea02b903280d609bb6a883735afbd7f14-1" - **BECAUSE**: If the user filters the items of the list, the whole list should be refreshed via AJAX.
- * Add items to the innerHTML of the DIV with the id "773bc02ea02b903280d609bb6a883735afbd7f14-2" - **BECAUSE:** If the user clicks the more button, further items should be added to the list
- * Completely refresh the innerHTML of the DIV with id "773bc02ea02b903280d609bb6a883735afbd7f14-3" - **BECAUSE:** In both cases the more button should be updated in order to have the correct page number as param
+ * Add items to the innerHTML of the DIV with the id "773bc02ea02b903280d609bb6a883735afbd7f14-2" - **BECAUSE:** If the user clicks the more button, further items should be added to the list via AJAX.
+ * Completely refresh the innerHTML of the DIV with id "773bc02ea02b903280d609bb6a883735afbd7f14-3" - **BECAUSE:** In both cases the more button should be updated via AJAX in order to have the correct page number as param.
 
-What is still missing is an information on when these actions are to be executed.
+What is still missing is an information about when these actions are to be executed.
 This is done by setting some params to the links and forms with the additionalParams-attribute. You can combine the following params with custom params for your extension.
  ```
 additionalParams="{your_stuff: '{key: value}', rkw_ajax: '{key: ajaxHelper.key, cid: ajaxHelper.contentUid, idl: \'2,3\'}'}"
@@ -161,7 +161,7 @@ Let's take a look on the params and what they do:
 * cid: Just add `ajaxHelper.contentUid` here. This is the uid of the current content element in order to include flexform settings.
 * idl: This is the magical part. Here you add a list of Ajax-Ids that are to be updated via Ajax. 
 
-In our
+Let's integrate that into our example:
 ``` 
 <div class="filters">
     <f:form noCacheHash="true" action="list" controller="More" extensionName="RkwRelated" pluginName="Morecontent" class="ajax" 
