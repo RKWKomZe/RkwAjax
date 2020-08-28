@@ -26,7 +26,7 @@ use RKW\RkwAjax\View\AjaxStandaloneView;
  * @copyright Rkw Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- * @deprecated
+ * @deprecated since version 8
  */
 class JsonTemplateEncoder extends AbstractJsonEncoder
 {

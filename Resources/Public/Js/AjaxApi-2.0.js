@@ -4,7 +4,8 @@
  *
  * Author: helllicht
  *
- * Last updated: 24.07.2020
+ * Last updated: 26.08.2020
+ * Last udate by: Steffen Kroggel
  *
  */
 
@@ -12,12 +13,12 @@
   // Create the defaults once
   // Additional options, extending the defaults, can be passed as an object from the initializing call
   var pluginName = "ajaxApi",
-      defaults = {
-        // form: "form.ajax"
-        boxSuccessClass: "success",
-        boxHintClass: "hint",
-        boxErrorClass: "error"
-      };
+    defaults = {
+      // form: "form.ajax"
+      boxSuccessClass: "success",
+      boxHintClass: "hint",
+      boxErrorClass: "error"
+    };
 
   // The plugin constructor
   function Plugin(element, options) {
@@ -38,12 +39,12 @@
       this.settings.elementType = this.settings.$el.prop("tagName");
 
       if (this.settings.elementType === "FORM") {
-        this.settings.formElements = this.settings.$el.find(":input:not(.btn), select");
+        this.settings.formElements = this.settings.$el.find(":input:not(.btn)");
         this.settings.url = this.settings.$el.attr("action");
 
         if (this.settings.$el.hasClass("ajax-feedback")) {
           this.settings.feedbackUrl = this.settings.$el.attr(
-              "data-feedback-url"
+            "data-feedback-url"
           );
         }
       } else if (this.settings.elementType === "A") {
@@ -58,8 +59,8 @@
       if (this.settings.elementType === "FORM") {
         var self = this;
         if (
-            this.settings.$el.hasClass("ajax") &&
-            this.settings.$el.hasClass("ajax-feedback")
+          this.settings.$el.hasClass("ajax") &&
+          this.settings.$el.hasClass("ajax-feedback")
         ) {
           // AJAX Feedback form
           this.settings.formElements.each(function () {
@@ -67,8 +68,8 @@
           });
           this.settings.$el.on("submit", this.sendForm.bind(this));
 
-
         } else if (this.settings.$el.hasClass("ajax")) {
+
           // Regular AJAX form
           this.settings.$el.on("submit", this.sendForm.bind(this));
 
@@ -112,8 +113,6 @@
       if (!this.settings.$el.hasClass("override-submit")) {
         var url = this.settings.url;
         var data = this.getFormValues();
-        // Add type to data array
-        data.unshift({ name: "type", value: 250 });
 
         this.ajaxRequest(url, data);
       }
@@ -154,9 +153,6 @@
       var url = this.settings.feedbackUrl;
       var data = field.serializeArray();
 
-      // Add type to data array
-      data.unshift({ name: "type", value: 250 });
-
       this.ajaxRequest(url, data);
     },
 
@@ -165,18 +161,15 @@
       var target = $(e.currentTarget);
       var form = this.settings.$el;
       var data = form
-          .find("select, input")
-          .not(".ajax-override")
-          .serializeArray();
+        .find("select, input")
+        .not(".ajax-override")
+        .serializeArray();
 
       if (target.prop("tagName") === "A") {
         var url = target.attr("href");
       } else if (target.prop("tagName") === "SELECT") {
         var url = target.val();
       }
-
-      // Add type to data array
-      data.unshift({ name: "type", value: 250 });
 
       this.ajaxRequest(url, data);
     },
@@ -188,23 +181,26 @@
     ajaxRequest: function (url, data) {
       var self = this;
 
+      // Add typeNum to data array
+      data.unshift({ name: "type", value: 250 });
+
       $.ajax({
-         method: "post",
-         url: url,
-         data: $.param(data),
-         dataType: "json",
-         complete: function (response) {
-           try {
-             // Successful request
-             response = JSON.parse(response.responseText);
-             console.log(response);
-             self.parseContent(response);
-           } catch (error) {
-             // Error in request
-             console.log(error.message);
-           }
-         }
-       });
+        method: "get",
+        url: url,
+        data: $.param(data),
+        dataType: "json",
+        complete: function (response) {
+          try {
+            // Successful request
+            response = JSON.parse(response.responseText);
+            console.log(response);
+            self.parseContent(response);
+          } catch (error) {
+            // Error in request
+            console.log(error.message);
+          }
+        }
+      });
     },
 
     parseContent: function (json) {
@@ -213,9 +209,9 @@
           var messageObject = json[property];
           for (var parent in messageObject) {
             var messageContent = this.getMessageBox(
-                messageObject[parent].message,
-                messageObject[parent].type,
-                parent
+              messageObject[parent].message,
+              messageObject[parent].type,
+              parent
             );
             this.appendContent(parent, messageContent);
           }
@@ -242,11 +238,11 @@
       try {
         var newContent = jQuery(content).appendTo(jQuery("#" + element));
         jQuery("#" + element)
-            .find(".box-loading")
-            .remove();
+          .find(".box-loading")
+          .remove();
         jQuery(document).trigger(
-            "rkw-ajax-api-content-changed",
-            newContent.parent()
+          "rkw-ajax-api-content-changed",
+          newContent.parent()
         );
       } catch (error) {}
     },
@@ -255,11 +251,11 @@
       try {
         var newContent = jQuery(content).prependTo(jQuery("#" + element));
         jQuery("#" + element)
-            .find(".box-loading")
-            .remove();
+          .find(".box-loading")
+          .remove();
         jQuery(document).trigger(
-            "rkw-ajax-api-content-changed",
-            newContent.parent()
+          "rkw-ajax-api-content-changed",
+          newContent.parent()
         );
       } catch (error) {}
     },
@@ -268,20 +264,20 @@
       try {
         if (jQuery(content).length > 0) {
           var newContent = jQuery(content).appendTo(
-              jQuery("#" + element).empty()
+            jQuery("#" + element).empty()
           );
           jQuery(document).trigger("rkw-ajax-api-content-changed", newContent);
         } else {
           jQuery("#" + element)
-              .empty()
-              .append(content);
+            .empty()
+            .append(content);
         }
       } catch (error) {}
     },
 
     getMessageBox: function (text, type, parent) {
       var box = jQuery(
-          '<div class="message-box" data-for="#' + parent + '">' + text + "</div>"
+        '<div class="message-box" data-for="#' + parent + '">' + text + "</div>"
       );
       if (type === 1) {
         box.addClass(this.settings.boxSuccessClass);
