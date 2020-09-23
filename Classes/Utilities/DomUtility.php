@@ -63,12 +63,27 @@ class DomUtility
             ]
         );
         $doc = $htmlObject->loadHTML($html);
+        $html = $doc->getElementsByTagName('html')->item(0);
 
+        // add HTML-element when no html elements are available
+        if ($doc->getElementsByTagName('html')->count() == 0) {
+            $html = $doc->createElement('html');
+            $doc->appendChild($html);
+        }
+
+        // search for matching tags
         $firstWrap = null;
         foreach (self::ALLOWED_TAGS as $tag) {
             if ($firstWrap = $doc->getElementsByTagName($tag)->item(0)) {
                 break;
             }
+        }
+
+        // add empty div when no allowed tag is found
+        if (! $firstWrap){
+
+            $firstWrap = $doc->createElement('div');
+            $html->appendChild($firstWrap);
         }
 
         if ($firstWrap instanceof \DOMElement) {

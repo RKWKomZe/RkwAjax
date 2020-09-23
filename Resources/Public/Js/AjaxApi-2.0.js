@@ -5,7 +5,7 @@
  * Author: helllicht
  *
  * Last updated: 26.08.2020
- * Last udate by: Steffen Kroggel
+ * Last update by: Steffen Kroggel
  *
  */
 

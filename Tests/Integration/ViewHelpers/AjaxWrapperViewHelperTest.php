@@ -187,6 +187,34 @@ class AjaxWrapperViewHelperTest extends FunctionalTestCase
     }
     //=============================================
 
+
+    /**
+     * @test
+     * @throws \TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException
+     */
+    public function itAddsEmptyDivIfEmpty ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given the ViewHelper is used in a template
+         * Given the content is empty
+         * When the ViewHelper is rendered
+         * Then an empty div is added
+         */
+
+        $this->standAloneViewHelper->setTemplate('Check40.html');
+        $_GET['ajaxContentUid'] = '55';
+        $this->standAloneViewHelper->assign('ajaxHelper', $this->ajaxHelper);
+
+        $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check40.txt');
+        $result = $this->standAloneViewHelper->render();
+
+        static::assertEquals($expected, $result);
+    }
+    //=============================================
+
     /**
      * TearDown
      */

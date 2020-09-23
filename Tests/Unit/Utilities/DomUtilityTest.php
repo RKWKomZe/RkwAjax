@@ -117,7 +117,7 @@ class DomUtilityTest extends UnitTestCase
          * Scenario:
          *
          * Given the html contains a wrapping element
-         * Given the html the wrapping element is an invalid tag
+         * Given the wrapping element is an invalid tag
          * When setAjaxAttributesToElements is called
          * Then the wrapper gets no corresponding id-attribute set
          * Then no comment elements are set inside of it
@@ -129,6 +129,32 @@ class DomUtilityTest extends UnitTestCase
         $result = $this->subject::setAjaxAttributesToElements($source, $this->ajaxHelper, 99, 'replace');
         static::assertEquals($expected, $result);
     }
+
+
+    /**
+     * @test
+     */
+    public function setAjaxAttributesToElementsAddsEmptyDivAsFallback ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given the html contains a wrapping element
+         * Given the wrapping element empty
+         * When setAjaxAttributesToElements is called
+         * Then an empty DIV is added
+         * Then the wrapper gets the corresponding ajax-attribute set
+         */
+        $source = file_get_contents(self::FIXTURE_PATH . '/Source/Check100.txt');
+        $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check100.txt');
+        $_GET['rkwAjax']['contentUid'] = '55';
+
+        $result = $this->subject::setAjaxAttributesToElements($source, $this->ajaxHelper, 99, 'replace');
+        static::assertEquals($expected, $result);
+    }
+
+
 
     //=============================================
 
