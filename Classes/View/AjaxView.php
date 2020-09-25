@@ -36,8 +36,13 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
     protected $jsonEncoder;
 
     /**
-     * @var \RKW\RkwAjax\Helper\AjaxHelper
+     * @var \RKW\RkwAjax\Helper\AjaxRequestHelper
      * @inject
+     */
+    protected $ajaxRequestHelper;
+
+    /**
+     * @var \RKW\RkwAjax\Helper\AjaxHelper
      */
     protected $ajaxHelper;
 
@@ -56,6 +61,17 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
 
 
     /**
+     * Set AjaxHelper to view
+     * @param \RKW\RkwAjax\Helper\AjaxHelper $ajaxHelper
+     */
+    public function setAjaxHelper( \RKW\RkwAjax\Helper\AjaxHelper $ajaxHelper)
+    {
+        $this->ajaxHelper = $ajaxHelper;
+        $this->assign('ajaxHelper', $this->ajaxHelper);
+    }
+
+
+    /**
      * Loads the template source and render the template.
      * If "layoutName" is set in a PostParseFacet callback, it will render the file with the given layout.
      *
@@ -66,11 +82,14 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
     public function render($actionName = null)
     {
         $result = parent::render($actionName);
+
+        // check for pageType and key
         if (
-            ($this->ajaxHelper->isAjaxCall())
-            && ($ajaxKey = $this->ajaxHelper->getKey())
-            && ($ajaxContentUid = $this->ajaxHelper->getContentUid())
-            && ($ajaxIdList = $this->ajaxHelper->getIdList())
+            ($this->ajaxRequestHelper->isAjaxCall())
+            && ($this->ajaxRequestHelper->getKey() == $this->ajaxHelper->getKey())
+            && ($ajaxIdList = $this->ajaxRequestHelper->getIdList())
+            && ($ajaxKey = $this->ajaxRequestHelper->getKey())
+            && ($ajaxContentUid = $this->ajaxRequestHelper->getContentUid())
         ) {
 
             $json = $this->jsonEncoder->setHtmlByDom(
