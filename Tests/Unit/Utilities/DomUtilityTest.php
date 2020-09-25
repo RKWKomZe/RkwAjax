@@ -75,9 +75,8 @@ class DomUtilityTest extends UnitTestCase
         */
         $source = file_get_contents(self::FIXTURE_PATH . '/Source/Check10.txt');
         $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check10.txt');
-        $_GET['rkwAjax']['contentUid'] = '55';
-        $this->ajaxHelper->init();
 
+        $this->ajaxHelper->setContentUid(55);
         $result = $this->subject::setAjaxAttributesToElements($source, $this->ajaxHelper, 99, 'replace');
         static::assertEquals($expected, $result);
     }
@@ -99,9 +98,8 @@ class DomUtilityTest extends UnitTestCase
          */
         $source = file_get_contents(self::FIXTURE_PATH . '/Source/Check20.txt');
         $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check20.txt');
-        $_GET['rkwAjax']['contentUid'] = '55';
-        $this->ajaxHelper->init();
 
+        $this->ajaxHelper->setContentUid(55);
         $result = $this->subject::setAjaxAttributesToElements($source, $this->ajaxHelper, 99, 'replace');
         static::assertEquals($expected, $result);
     }
@@ -124,7 +122,7 @@ class DomUtilityTest extends UnitTestCase
          */
         $source = file_get_contents(self::FIXTURE_PATH . '/Source/Check30.txt');
         $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check30.txt');
-        $_GET['rkwAjax']['contentUid'] = '55';
+        $this->ajaxHelper->setContentUid(55);
 
         $result = $this->subject::setAjaxAttributesToElements($source, $this->ajaxHelper, 99, 'replace');
         static::assertEquals($expected, $result);
@@ -148,7 +146,7 @@ class DomUtilityTest extends UnitTestCase
          */
         $source = file_get_contents(self::FIXTURE_PATH . '/Source/Check100.txt');
         $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check100.txt');
-        $_GET['rkwAjax']['contentUid'] = '55';
+        $this->ajaxHelper->setContentUid(55);
 
         $result = $this->subject::setAjaxAttributesToElements($source, $this->ajaxHelper, 99, 'replace');
         static::assertEquals($expected, $result);

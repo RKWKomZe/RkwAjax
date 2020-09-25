@@ -14,8 +14,6 @@ namespace RKW\RkwAjax\Helper;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 
 /**
  * Class AjaxHelper
@@ -26,61 +24,16 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @api
  */
-class AjaxHelper
+class AjaxHelper extends AjaxHelperAbstract
 {
 
-    const PAGE_TYPE = 250;
-
 
     /**
-     * Checks if it was an Ajax-call
+     * Frontend controller
      *
-     * @var bool
+     * @var \RKW\RkwAjax\Controller\AjaxControllerInterface
      */
-    protected $isAjaxCall;
-
-
-    /**
-     * Unique key
-     *
-     * @var string
-     */
-    protected $key;
-
-
-    /**
-     * Uid of content element using Ajax
-     *
-     * @var int
-     */
-    protected $contentUid;
-
-
-    /**
-     * Array of ids from elements in DOM to change via Ajax
-     *
-     * @var array
-     */
-    protected $idList;
-
-
-    /**
-     * @var \TYPO3\CMS\Form\Mvc\Configuration\ConfigurationManager
-     * @inject
-     */
-    protected $configurationManager;
-
-
-
-    /**
-     * Checks if was an ajaxCall
-     *
-     * @return bool
-     */
-    public function isAjaxCall ()
-    {
-        return boolval($this->isAjaxCall);
-    }
+    protected $frontendController;
 
 
     /**
@@ -91,75 +44,66 @@ class AjaxHelper
     public function getKey ()
     {
         if (! $this->key) {
-            $this->key = sha1($this->getContentUid());
+            $this->calculateKey();
         }
         return $this->key;
     }
 
 
-    /**
-     * Gets the contentUid
-     *
-     * @return int
-     */
-    public function getContentUid ()
-    {
-        return intval($this->contentUid);
-    }
-
 
     /**
-     * Gets the idList
-     *
-     * @return array
+     * Calculates the key
      */
-    public function getIdList ()
+    protected function calculateKey ()
     {
-        return $this->idList;
-    }
-
-
-
-    /**
-     * Init values based on GET-Params or on given param
-     *
-     * @param array $settings
-     */
-    public function init (array $settings = [])
-    {
-
-        if (GeneralUtility::_GP('rkw_ajax')) {
-            $settings = GeneralUtility::_GP('rkw_ajax');
-
-            if (
-                (GeneralUtility::_GP('type') == self::PAGE_TYPE)
-                || (GeneralUtility::_GP('typeNum') == self::PAGE_TYPE)
-            ){
-                $this->isAjaxCall = true;
-            }
+        if (
+            ($this->frontendController)
+            && ($this->frontendController->getRequest())
+        ) {
+            $this->key = sha1(
+                $this->getContentUid() . '_' .
+                md5(
+                    $this->frontendController->getRequest()->getPluginName() .
+                    $this->frontendController->getRequest()->getControllerName() .
+                    $this->frontendController->getRequest()->getControllerActionName() .
+                    serialize($this->getFrontendController()->getSettings())
+                )
+            );
         }
 
-        if ($settings) {
-            if ($contentUid = $settings['cid']) {
-                $this->contentUid = $contentUid;
-            }
-            if ($key = $settings['key']) {
-                $this->key = $key;
-            }
-            if ($idList = GeneralUtility::trimExplode(',', $settings['idl'])) {
-                $this->idList = $idList;
-            }
-        }
+        $this->key = sha1($this->getContentUid());
+    }
+
+
+
+    /**
+     * Gets the frontend controller
+     *
+     * @return \RKW\RkwAjax\Controller\AjaxControllerInterface
+     */
+    public function getFrontendController ()
+    {
+        return $this->frontendController;
     }
 
 
     /**
-     * Constructor
+     * Sets the frontend controller
      *
-     * @param array $settings
+     * @param \RKW\RkwAjax\Controller\AjaxControllerInterface
      */
-    public function __construct(array $settings = [])
+    public function setFrontendController (\RKW\RkwAjax\Controller\AjaxControllerInterface $frontendController)
     {
-        $this->init($settings);
+
+        $this->frontendController = $frontendController;
+        if (
+            ($this->frontendController->getConfigurationManager())
+            && ($contentObject = $this->frontendController->getConfigurationManager()->getContentObject())
+            && ($contentUid = $contentObject->data['uid'])
+        ) {
+            $this->setContentUid($contentUid);
+        }
+
     }
+
 }

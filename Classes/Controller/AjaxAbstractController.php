@@ -30,8 +30,9 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @api
  */
-abstract class AjaxAbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+abstract class AjaxAbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController implements AjaxControllerInterface
 {
+
     /**
      * The default view object to use if none of the resolved views can render
      * a response for the current request.
@@ -54,7 +55,6 @@ abstract class AjaxAbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\
     protected $ajaxHelper;
 
 
-
     /**
      * @param ConfigurationManagerInterface $configurationManager
      */
@@ -66,22 +66,49 @@ abstract class AjaxAbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\
 
 
     /**
-     * Assigns ajaxUtility to all actions
+     * Returns the settings of the controller
+     *
+     * @return array
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+
+    /**
+     * Returns the configurationManager of the controller
+     *
+     * @return \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+     */
+    public function getConfigurationManager()
+    {
+        return $this->configurationManager;
+    }
+
+    /**
+     * Returns the requestObject of the controller
+     *
+     * @return \TYPO3\CMS\Extbase\Mvc\Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+
+    /**
+     * Assign ajaxHelper with all relevant values
      *
      * @param ViewInterface $view The view to be initialized
      * @api
      */
     protected function initializeView(ViewInterface $view)
     {
-        if (
-            ($this->configurationManager)
-            && ($this->configurationManager->getContentObject())
-        ){
-            $contentUid = intval($this->configurationManager->getContentObject()->data['uid']);
-            $this->ajaxHelper->init(['cid' => $contentUid]);
-        }
+        // set controller
+        $this->ajaxHelper->setFrontendController($this);
 
-        $view->assign('ajaxHelper', $this->ajaxHelper);
+        /** @var \RKW\RkwAjax\View\AjaxView $view  */
+        $view->setAjaxHelper($this->ajaxHelper);
     }
 
 
