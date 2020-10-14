@@ -65,13 +65,14 @@ class AjaxHelper extends AjaxHelperAbstract
                 md5(
                     $this->frontendController->getRequest()->getPluginName() .
                     $this->frontendController->getRequest()->getControllerName() .
-                    $this->frontendController->getRequest()->getControllerActionName() .
+                    $this->frontendController->getRequest()->getControllerActionName().
                     serialize($this->getFrontendController()->getSettings())
                 )
             );
+        } else {
+            $this->key = sha1($this->getContentUid());
         }
 
-        $this->key = sha1($this->getContentUid());
     }
 
 

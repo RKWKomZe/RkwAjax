@@ -38,14 +38,6 @@ class AjaxRequestHelper extends AjaxHelperAbstract
     protected $idList;
 
 
-    /**
-     * Checks if it was an Ajax-call
-     *
-     * @var bool
-     */
-    protected $isAjaxCall;
-
-
 
     /**
      * Gets the idList
@@ -69,38 +61,15 @@ class AjaxRequestHelper extends AjaxHelperAbstract
     }
 
 
-
-    /**
-     * Checks if was an ajaxCall
-     *
-     * @return bool
-     */
-    public function isAjaxCall ()
-    {
-        return boolval($this->isAjaxCall);
-    }
-
-
     /**
      * Init values based on GET-/POST-Params or on given params and settings
      *
      */
     public function initFromGetPost ()
     {
-
-        $values = [];
         if (GeneralUtility::_GP('rkw_ajax')) {
             $values = GeneralUtility::_GP('rkw_ajax');
 
-            if (
-                (GeneralUtility::_GP('type') == self::PAGE_TYPE)
-                || (GeneralUtility::_GP('typeNum') == self::PAGE_TYPE)
-            ){
-                $this->isAjaxCall = true;
-            }
-        }
-
-        if ($values) {
             if ($contentUid = $values['cid']) {
                 $this->setContentUid($contentUid);
             }

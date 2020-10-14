@@ -120,7 +120,7 @@ class AjaxRequestHelperTest extends UnitTestCase
     /**
      * @test
      */
-    public function isAjaxCallReturnsFalseIfNotAjaxPageType ()
+    public function getIsAjaxCallReturnsFalseIfNotAjaxPageType ()
     {
         /**
          * Scenario:
@@ -130,15 +130,14 @@ class AjaxRequestHelperTest extends UnitTestCase
          * Then false is returned
          */
         $_GET['type'] = 0;
-        $this->subject->initFromGetPost();
-        self::assertFalse($this->subject->isAjaxCall());
+        self::assertFalse($this->subject->getIsAjaxCall());
     }
 
 
     /**
      * @test
      */
-    public function isAjaxCallReturnsFalseIfAjaxParamsWithoutAjaxPageType ()
+    public function getIsAjaxCallReturnsFalseIfAjaxParamsWithoutAjaxPageType ()
     {
 
         /**
@@ -151,14 +150,13 @@ class AjaxRequestHelperTest extends UnitTestCase
          */
         $_GET['type'] = 0;
         $_GET['rkw_ajax'] = ['test'];
-        $this->subject->initFromGetPost();
-        self::assertFalse($this->subject->isAjaxCall());
+        self::assertFalse($this->subject->getIsAjaxCall());
     }
 
     /**
      * @test
      */
-    public function isAjaxCallReturnsFalseIfAjaxPageTypeWithoutAjaxParams ()
+    public function getIsAjaxCallReturnsFalseIfAjaxPageTypeWithoutAjaxParams ()
     {
         /**
          * Scenario:
@@ -169,15 +167,14 @@ class AjaxRequestHelperTest extends UnitTestCase
          * Then false is returned
          */
         $_GET['type'] = 250;
-        $this->subject->initFromGetPost();
-        self::assertFalse($this->subject->isAjaxCall());
+        self::assertFalse($this->subject->getIsAjaxCall());
     }
 
 
     /**
      * @test
      */
-    public function isAjaxCallReturnsTrueIfAjaxPageTypeWithAjaxParams ()
+    public function getIsAjaxCallReturnsTrueIfAjaxPageTypeWithAjaxParams ()
     {
         /**
          * Scenario:
@@ -189,8 +186,7 @@ class AjaxRequestHelperTest extends UnitTestCase
          */
         $_GET['type'] = 250;
         $_GET['rkw_ajax'] = ['test'];
-        $this->subject->initFromGetPost();
-        self::assertTrue($this->subject->isAjaxCall());
+        self::assertTrue($this->subject->getIsAjaxCall());
 
     }
 

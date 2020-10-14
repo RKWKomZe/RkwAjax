@@ -106,6 +106,81 @@ class AjaxHelperTest extends UnitTestCase
     //=============================================
 
     /**
+     * @test
+     */
+    public function getIsAjaxCallReturnsFalseIfNotAjaxPageType ()
+    {
+        /**
+         * Scenario:
+         *
+         * Given a pageType not equal to 250 is called
+         * When isAjax is called
+         * Then false is returned
+         */
+        $_GET['type'] = 0;
+        self::assertFalse($this->subject->getIsAjaxCall());
+    }
+
+
+    /**
+     * @test
+     */
+    public function getIsAjaxCallReturnsFalseIfAjaxParamsWithoutAjaxPageType ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given a pageType not equal to 250 is called
+         * Given a rkw_ajax param is set
+         * When isAjax is called
+         * Then false is returned
+         */
+        $_GET['type'] = 0;
+        $_GET['rkw_ajax'] = ['test'];
+        self::assertFalse($this->subject->getIsAjaxCall());
+    }
+
+    /**
+     * @test
+     */
+    public function getIsAjaxCallReturnsFalseIfAjaxPageTypeWithoutAjaxParams ()
+    {
+        /**
+         * Scenario:
+         *
+         * Given a pageType equal to 250 is called
+         * Given no rkw_ajax param is set
+         * When isAjax is called
+         * Then false is returned
+         */
+        $_GET['type'] = 250;
+        self::assertFalse($this->subject->getIsAjaxCall());
+    }
+
+
+    /**
+     * @test
+     */
+    public function getIsAjaxCallReturnsTrueIfAjaxPageTypeWithAjaxParams ()
+    {
+        /**
+         * Scenario:
+         *
+         * Given a pageType equal to 250 is called
+         * Given a rkw_ajax param is set
+         * When isAjax is called
+         * Then true is returned
+         */
+        $_GET['type'] = 250;
+        $_GET['rkw_ajax'] = ['test'];
+        self::assertTrue($this->subject->getIsAjaxCall());
+
+    }
+
+    //=============================================
+
+    /**
      * TearDown
      */
     protected function tearDown()
