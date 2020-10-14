@@ -48,6 +48,11 @@ abstract class AjaxHelperAbstract
     protected $contentUid;
 
 
+    /**
+     * @var \TYPO3\CMS\Core\Log\Logger
+     */
+    protected $logger;
+
 
     /**
      * Gets the key
@@ -113,5 +118,21 @@ abstract class AjaxHelperAbstract
         return false;
     }
 
+
+
+    /**
+     * Returns logger instance
+     *
+     * @return \TYPO3\CMS\Core\Log\Logger
+     */
+    protected function getLogger()
+    {
+
+        if (!$this->logger instanceof \TYPO3\CMS\Core\Log\Logger) {
+            $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Log\LogManager')->getLogger(__CLASS__);
+        }
+
+        return $this->logger;
+    }
 
 }

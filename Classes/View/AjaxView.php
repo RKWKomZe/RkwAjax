@@ -52,6 +52,12 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
     protected $objectManager;
 
     /**
+     * @var \TYPO3\CMS\Core\Log\Logger
+     */
+    protected $logger;
+
+
+    /**
      * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
      */
     public function injectObjectManager(ObjectManagerInterface $objectManager)
@@ -84,22 +90,46 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
         $result = parent::render($actionName);
 
         // check for pageType and key
-        if (
-            ($this->ajaxRequestHelper->getIsAjaxCall())
-            && ($this->ajaxRequestHelper->getKey() == $this->ajaxHelper->getKey())
-            && ($ajaxIdList = $this->ajaxRequestHelper->getIdList())
-            && ($ajaxKey = $this->ajaxRequestHelper->getKey())
-           // && ($ajaxContentUid = $this->ajaxRequestHelper->getContentUid())
-        ) {
+        if ($this->ajaxRequestHelper->getIsAjaxCall()) {
 
-            $json = $this->jsonEncoder->setHtmlByDom(
-                $result,
-                $ajaxIdList,
-                $ajaxKey
+            $this->getLogger()->log(
+                \TYPO3\CMS\Core\Log\LogLevel::DEBUG,
+                sprintf(
+                    'Ajax-Call with ajaxKey "%s" and ajaxIdList "%s" for view detected.',
+                    $this->ajaxRequestHelper->getKey(),
+                    $this->ajaxRequestHelper->getIdList()
+                )
             );
 
-            $this->sendResponse($json);
-            return '';
+            if (
+                ($result)
+                && ($this->ajaxRequestHelper->getKey() == $this->ajaxHelper->getKey())
+                && ($ajaxIdList = $this->ajaxRequestHelper->getIdList())
+                && ($ajaxKey = $this->ajaxRequestHelper->getKey())
+                // && ($ajaxContentUid = $this->ajaxRequestHelper->getContentUid())
+            ) {
+
+                $json = $this->jsonEncoder->setHtmlByDom(
+                    $result,
+                    $ajaxIdList,
+                    $ajaxKey
+                );
+
+                $this->sendResponse($json);
+                return '';
+
+            } else {
+
+                $this->getLogger()->log(
+                    \TYPO3\CMS\Core\Log\LogLevel::DEBUG,
+                    'Ajax-Call not successful or empty string returned.'
+                );
+
+                $json = $this->jsonEncoder;
+                $this->sendResponse($json);
+                return '';
+
+            }
         }
 
         return $result;
@@ -119,4 +149,21 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
         $response->send();
         exit;
     }
+
+
+    /**
+     * Returns logger instance
+     *
+     * @return \TYPO3\CMS\Core\Log\Logger
+     */
+    protected function getLogger()
+    {
+
+        if (!$this->logger instanceof \TYPO3\CMS\Core\Log\Logger) {
+            $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Log\LogManager')->getLogger(__CLASS__);
+        }
+
+        return $this->logger;
+    }
+
 }
