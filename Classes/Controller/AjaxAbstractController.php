@@ -14,10 +14,11 @@ namespace RKW\RkwAjax\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Service\FlexFormService;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use RKW\RkwAjax\Utilities\GeneralUtility as GeneralUtility;
+
 use RKW\RkwAjax\Domain\Repository\ContentRepository;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
@@ -141,7 +142,7 @@ abstract class AjaxAbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\
             $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
             $flexFormSettings = $flexFormService->convertFlexFormContentToArray($flexFormData);
             if (key_exists('settings', $flexFormSettings)) {
-                $this->settings = array_merge($this->settings, $flexFormSettings['settings']);
+                $this->settings = GeneralUtility::arrayMergeRecursiveDistinct($this->settings, $flexFormSettings['settings']);
             }
         }
     }

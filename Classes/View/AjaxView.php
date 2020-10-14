@@ -85,11 +85,11 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
 
         // check for pageType and key
         if (
-            ($this->ajaxRequestHelper->isAjaxCall())
+            ($this->ajaxRequestHelper->getIsAjaxCall())
             && ($this->ajaxRequestHelper->getKey() == $this->ajaxHelper->getKey())
             && ($ajaxIdList = $this->ajaxRequestHelper->getIdList())
             && ($ajaxKey = $this->ajaxRequestHelper->getKey())
-            && ($ajaxContentUid = $this->ajaxRequestHelper->getContentUid())
+           // && ($ajaxContentUid = $this->ajaxRequestHelper->getContentUid())
         ) {
 
             $json = $this->jsonEncoder->setHtmlByDom(

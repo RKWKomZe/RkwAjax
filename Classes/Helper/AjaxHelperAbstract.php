@@ -93,6 +93,25 @@ abstract class AjaxHelperAbstract
     }
 
 
+    /**
+     * Checks if was an ajaxCall
+     *
+     * @return bool
+     */
+    public function getIsAjaxCall ()
+    {
+        if (
+            (GeneralUtility::_GP('rkw_ajax'))
+            && (
+                (GeneralUtility::_GP('type') == self::PAGE_TYPE)
+                || (GeneralUtility::_GP('typeNum') == self::PAGE_TYPE)
+            )
+        ){
+            return true;
+        }
+
+        return false;
+    }
 
 
 }
