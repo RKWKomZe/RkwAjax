@@ -56,22 +56,30 @@ class AjaxHelper extends AjaxHelperAbstract
      */
     protected function calculateKey ()
     {
+
+        $plaintextKey = $this->getContentUid();
         if (
             ($this->frontendController)
             && ($this->frontendController->getRequest())
         ) {
-            $this->key = sha1(
-                $this->getContentUid() . '_' .
-                md5(
-                    $this->frontendController->getRequest()->getPluginName() .
-                    $this->frontendController->getRequest()->getControllerName() .
-                    $this->frontendController->getRequest()->getControllerActionName().
-                    serialize($this->getFrontendController()->getSettings())
-                )
-            );
-        } else {
-            $this->key = sha1($this->getContentUid());
+            $plaintextKey = $this->getContentUid() . '_' .
+                $this->frontendController->getRequest()->getControllerExtensionName() .  '_' .
+                $this->frontendController->getRequest()->getPluginName() .  '_' .
+                $this->frontendController->getRequest()->getControllerName() . '_' .
+                $this->frontendController->getRequest()->getControllerActionName() . '_';
+               // serialize($this->getFrontendController()->getSettings());
         }
+
+        $this->key = sha1($plaintextKey);
+
+        $this->getLogger()->log(
+            \TYPO3\CMS\Core\Log\LogLevel::DEBUG,
+            sprintf(
+                'Calculated key "%s", plaintext: "%s".',
+                $this->key,
+                $plaintextKey
+            )
+        );
 
     }
 
