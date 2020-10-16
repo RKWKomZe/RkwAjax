@@ -118,17 +118,6 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
                 $this->sendResponse($json);
                 return '';
 
-            } else {
-
-                $this->getLogger()->log(
-                    \TYPO3\CMS\Core\Log\LogLevel::DEBUG,
-                    'Ajax-Call not successful or empty string returned.'
-                );
-
-                $json = $this->jsonEncoder;
-                $this->sendResponse($json);
-                return '';
-
             }
         }
 
