@@ -114,7 +114,7 @@ class AjaxHelperTest extends UnitTestCase
          * Scenario:
          *
          * Given a pageType not equal to 250 is called
-         * When isAjax is called
+         * When the method is called
          * Then false is returned
          */
         $_GET['type'] = 0;
@@ -133,7 +133,7 @@ class AjaxHelperTest extends UnitTestCase
          *
          * Given a pageType not equal to 250 is called
          * Given a rkw_ajax param is set
-         * When isAjax is called
+         * When the method is called
          * Then false is returned
          */
         $_GET['type'] = 0;
@@ -151,7 +151,7 @@ class AjaxHelperTest extends UnitTestCase
          *
          * Given a pageType equal to 250 is called
          * Given no rkw_ajax param is set
-         * When isAjax is called
+         * When the method is called
          * Then false is returned
          */
         $_GET['type'] = 250;
@@ -169,13 +169,47 @@ class AjaxHelperTest extends UnitTestCase
          *
          * Given a pageType equal to 250 is called
          * Given a rkw_ajax param is set
-         * When isAjax is called
+         * When the method is called
          * Then true is returned
          */
         $_GET['type'] = 250;
         $_GET['rkw_ajax'] = ['test'];
         self::assertTrue($this->subject->getIsAjaxCall());
 
+    }
+
+    //=============================================
+
+    /**
+     * @test
+     */
+    public function getIsPostCallReturnsFalseIfNoPost ()
+    {
+        /**
+         * Scenario:
+         *
+         * Given no post variables are set
+         * When the method is called
+         * Then false is returned
+         */
+        self::assertFalse($this->subject->getIsPostCall());
+    }
+
+
+    /**
+     * @test
+     */
+    public function getIsPostCallReturnsTrueIfPost ()
+    {
+        /**
+         * Scenario:
+         *
+         * Given post variables are set
+         * When the method is called
+         * Then false is returned
+         */
+        $_POST['test'] = 1;
+        self::assertFalse($this->subject->getIsPostCall());
     }
 
     //=============================================
