@@ -212,3 +212,32 @@ In case of the AjaxWrapper with `id=3` the button itself will be replaced with a
 Lust but not least: don't forget to add the CSS-class `ajax` to all elements that are meant to trigger AJAX-events ;-)
 
 That is basically all the magic. 
+
+### Special Case: Execute Ajax-Call on page-load
+To achieve this you simply can add a template-tag to the website. The following example additionally checks for logged in users an ONLY executes the ajax call when one is logged in
+```
+<template class="ajax" id="tx-rkwregistration-login-info-ajax"></template>
+<f:comment><!-- only do an ajax-call if fe-cookie is set. This is to reduce requests to the server--></f:comment>
+<script type="text/javascript">
+    var txRkwRegistrationAjaxUrl = "{f:uri.action(action:'loginInfo', absolute:'1', additionalParams:'{rkw_ajax : \'{key: ajaxHelper.key, cid: ajaxHelper.contentUid, idl: \\\'1\\\'}\'}') -> f:format.raw()}";
+    if (document.cookie.split(';').some((item) => item.trim().startsWith('fe_typo_user='))) {
+        document.getElementById('tx-rkwregistration-login-info-ajax').setAttribute('data-ajax-url', txRkwRegistrationAjaxUrl);
+    }
+</script>
+ ```
+ 
+If you combine this with a form, you can additionally check whether the form was submitted. This way, the ajax call is only triggered, when the form was not submitted.
+In that use-case it is also important to use the forward-method in case of an error in the controller, because the forward-methods keeps the POST-vars and thus prevents a further ajax-call.
+ ```
+ <template class="ajax" id="tx-rkwregistration-login-info-ajax"></template>
+ <f:comment><!-- only do an ajax-call if fe-cookie is set AND the form was not submitted. This is to reduce requests to the server--></f:comment>
+ <f:if condition="! {ajaxHelper.isPostCall}">
+     <script type="text/javascript">
+         var txRkwRegistrationAjaxUrl = "{f:uri.action(action:'loginInfo', absolute:'1', additionalParams:'{rkw_ajax : \'{key: ajaxHelper.key, cid: ajaxHelper.contentUid, idl: \\\'1\\\'}\'}') -> f:format.raw()}";
+         if (document.cookie.split(';').some((item) => item.trim().startsWith('fe_typo_user='))) {
+             document.getElementById('tx-rkwregistration-login-info-ajax').setAttribute('data-ajax-url', txRkwRegistrationAjaxUrl);
+         }
+     </script>
+ </f:if>
+  ```
+  

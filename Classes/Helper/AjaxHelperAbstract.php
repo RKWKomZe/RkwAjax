@@ -121,6 +121,21 @@ abstract class AjaxHelperAbstract
 
 
     /**
+     * Checks if was an form post
+     *
+     * @return bool
+     */
+    public function getIsPostCall ()
+    {
+        if ($_POST){
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
      * Returns logger instance
      *
      * @return \TYPO3\CMS\Core\Log\Logger
