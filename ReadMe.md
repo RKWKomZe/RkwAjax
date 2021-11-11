@@ -213,7 +213,7 @@ Lust but not least: don't forget to add the CSS-class `ajax` to all elements tha
 
 That is basically all the magic. 
 
-### Special Case: Execute Ajax-Call on page-load
+### Special Case I: Execute Ajax-Call on page-load
 To achieve this you simply can add a template-tag to the website. The following example additionally checks for logged in users an ONLY executes the ajax call when one is logged in
 ```
 <template class="ajax" id="tx-rkwregistration-login-info-ajax"></template>
@@ -240,4 +240,9 @@ In that use-case it is also important to use the forward-method in case of an er
      </script>
  </f:if>
   ```
-  
+### Special Case II: Execute Ajax-Call on page-load with specific viewport only
+In some cases it is helpful to bind the ajax-request on page-load to a specific viewport, e.h. to only trigger it on mobile devices.
+To archive this you can simply add the corresponding attribute `data-ajax-max-width`.
+```
+<template class="ajax" data-ajax-max-width="1280" data-ajax-url="{f:uri.action(action:'mobileMenu', absolute:'1', additionalParams:'{rkw_ajax : \'{key: ajaxHelper.key, cid: ajaxHelper.contentUid, idl: \\\'1\\\'}\'}') -> f:format.raw()}"></template>
+ ```
