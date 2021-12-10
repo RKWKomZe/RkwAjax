@@ -219,8 +219,8 @@ To achieve this you simply can add a template-tag to the website. The following 
 <template class="ajax" id="tx-rkwregistration-login-info-ajax"></template>
 <f:comment><!-- only do an ajax-call if fe-cookie is set. This is to reduce requests to the server--></f:comment>
 <script type="text/javascript">
-    var txRkwRegistrationAjaxUrl = "{f:uri.action(action:'loginInfo', absolute:'1', additionalParams:'{rkw_ajax : \'{key: ajaxHelper.key, cid: ajaxHelper.contentUid, idl: \\\'1\\\'}\'}') -> f:format.raw()}";
-    if (document.cookie.split(';').some((item) => item.trim().startsWith('fe_typo_user='))) {
+    var txRkwRegistrationAjaxUrl = "{f:uri.action(action:'loginInfo', absolute:'1', addQueryString: '1', additionalParams:'{rkw_ajax : \'{key: ajaxHelper.key, cid: ajaxHelper.contentUid, idl: \\\'1\\\'}\'}') -> f:format.raw()}";
+    if (document.cookie.indexOf('fe_typo_user=') > -1) {
         document.getElementById('tx-rkwregistration-login-info-ajax').setAttribute('data-ajax-url', txRkwRegistrationAjaxUrl);
     }
 </script>
@@ -233,8 +233,8 @@ In that use-case it is also important to use the forward-method in case of an er
  <f:comment><!-- only do an ajax-call if fe-cookie is set AND the form was not submitted. This is to reduce requests to the server--></f:comment>
  <f:if condition="! {ajaxHelper.isPostCall}">
      <script type="text/javascript">
-         var txRkwRegistrationAjaxUrl = "{f:uri.action(action:'loginInfo', absolute:'1', additionalParams:'{rkw_ajax : \'{key: ajaxHelper.key, cid: ajaxHelper.contentUid, idl: \\\'1\\\'}\'}') -> f:format.raw()}";
-         if (document.cookie.split(';').some((item) => item.trim().startsWith('fe_typo_user='))) {
+         var txRkwRegistrationAjaxUrl = "{f:uri.action(action:'loginInfo', absolute:'1', addQueryString: '1', additionalParams:'{rkw_ajax : \'{key: ajaxHelper.key, cid: ajaxHelper.contentUid, idl: \\\'1\\\'}\'}') -> f:format.raw()}";
+         if (document.cookie.indexOf('fe_typo_user=') > -1) {
              document.getElementById('tx-rkwregistration-login-info-ajax').setAttribute('data-ajax-url', txRkwRegistrationAjaxUrl);
          }
      </script>
