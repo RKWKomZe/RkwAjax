@@ -213,6 +213,24 @@ Lust but not least: don't forget to add the CSS-class `ajax` to all elements tha
 
 That is basically all the magic. 
 
+
+### Advanced usage options
+#### On Submit
+By default, a form is always sent "on change". This behavior can be changed to "on submit" by using the additional class "ajax-submit-only"
+```
+<f:form
+    action="new"
+    class="ajax ajax-submit-only"
+    additionalParams="{rkw_ajax: '{key: ajaxHelper.key, cid: ajaxHelper.contentUid, idl: \'1\'}'}"
+>
+```
+
+#### Scroll to top
+To scroll to top after submit use class "ajax-scroll-top"
+
+#### Loading indicator
+As data-attribute you can specify the ID of the container that should be grayed out with "data-ajax-indicator-id"
+
 ### Special Case I: Execute Ajax-Call on page-load
 To achieve this you simply can add a template-tag to the website. The following example additionally checks for logged in users an ONLY executes the ajax call when one is logged in
 ```
@@ -246,3 +264,6 @@ To archive this you can simply add the corresponding attribute `data-ajax-max-wi
 ```
 <template class="ajax" data-ajax-max-width="1280" data-ajax-url="{f:uri.action(action:'mobileMenu', absolute:'1', additionalParams:'{rkw_ajax : \'{key: ajaxHelper.key, cid: ajaxHelper.contentUid, idl: \\\'1\\\'}\'}') -> f:format.raw()}"></template>
  ```
+
+### Additional hints
+Since version v8.7.57-stable all requests are sent as "POST" to avoid the JS error "HTTP Error 414. The request URL is too long"
