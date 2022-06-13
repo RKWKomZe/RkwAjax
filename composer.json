@@ -15,9 +15,9 @@
             "homepage": "http://www.steffenkroggel.de",
             "role": "Developer"
         }
-    ],Basics
+    ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-json": "*",
         "masterminds/html5": "^2.0",
         "typo3/cms-core": "~9.5.0"
