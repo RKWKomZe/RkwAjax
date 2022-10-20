@@ -41,7 +41,7 @@ class AjaxRequestHelperTest extends UnitTestCase
     /**
      * Setup
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->subject = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(AjaxRequestHelper::class);
@@ -107,7 +107,7 @@ class AjaxRequestHelperTest extends UnitTestCase
         $this->subject->initFromGetPost();
 
         $result = $this->subject->getIdList();
-        self::assertInternalType('array', $result );
+        self::assertIsArray( $result );
         self::assertCount(2, $result );
         self::assertEquals(15, $result[0]);
         self::assertEquals(30, $result[1]);
@@ -229,7 +229,7 @@ class AjaxRequestHelperTest extends UnitTestCase
     /**
      * TearDown
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

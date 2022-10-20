@@ -44,7 +44,7 @@ class GeneralUtilityTest extends UnitTestCase
      * Setup
      * @throws \Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
 
         parent::setUp();
@@ -169,7 +169,7 @@ class GeneralUtilityTest extends UnitTestCase
     /**
      * TearDown
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

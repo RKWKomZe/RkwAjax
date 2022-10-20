@@ -29,7 +29,7 @@ use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @api
- * @deprecated since version 8
+ * @deprecated since version 8, will be removed in version 10.x
  */
 class AjaxStandaloneView extends \TYPO3\CMS\Fluid\View\StandaloneView
 {
@@ -65,7 +65,7 @@ class AjaxStandaloneView extends \TYPO3\CMS\Fluid\View\StandaloneView
                 $this->baseRenderingContext->getTemplatePaths()->setTemplateRootPaths($newTemplatePaths);
                 parent::setTemplate(basename($templateName));
 
-                \TYPO3\CMS\Core\Utility\GeneralUtility::deprecationLog(__CLASS__ . '::' . __METHOD__ . '(): Please do not use this method with relative paths included. ' .
+                trigger_error(__CLASS__ . '::' . __METHOD__ . '(): Please do not use this method with relative paths included. ' .
                     'The paths should be added to the TemplateRootPaths instead. From TYPO3 8.7 on templates are set via the given controller action. ' .
                     'Thus using setTemplate with relative paths will in turn result in using this path as controller action.'
                 );

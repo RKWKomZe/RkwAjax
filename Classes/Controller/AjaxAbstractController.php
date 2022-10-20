@@ -14,7 +14,7 @@ namespace RKW\RkwAjax\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Extbase\Service\FlexFormService;
+use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use RKW\RkwAjax\Utilities\GeneralUtility as GeneralUtility;
@@ -45,13 +45,13 @@ abstract class AjaxAbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\
 
     /**
      * @var \RKW\RkwAjax\Domain\Repository\ContentRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $contentRepository;
 
     /**
      * @var \RKW\RkwAjax\Helper\AjaxHelper
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $ajaxHelper;
 

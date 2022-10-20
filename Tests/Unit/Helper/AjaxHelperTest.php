@@ -41,7 +41,7 @@ class AjaxHelperTest extends UnitTestCase
     /**
      * Setup
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->subject = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(AjaxHelper::class);
@@ -217,7 +217,7 @@ class AjaxHelperTest extends UnitTestCase
     /**
      * TearDown
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

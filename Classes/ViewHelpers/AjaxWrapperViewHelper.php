@@ -29,7 +29,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class AjaxWrapperViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class AjaxWrapperViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 
     use CompileWithContentArgumentAndRenderStatic;
