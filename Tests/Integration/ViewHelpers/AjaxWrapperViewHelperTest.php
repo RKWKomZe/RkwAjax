@@ -125,7 +125,7 @@ class AjaxWrapperViewHelperTest extends FunctionalTestCase
         $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check10.txt');
         $result = $this->standAloneViewHelper->render();
 
-        static::assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -154,7 +154,7 @@ class AjaxWrapperViewHelperTest extends FunctionalTestCase
         $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check20.txt');
         $result = $this->standAloneViewHelper->render();
 
-        static::assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
 
@@ -182,7 +182,7 @@ class AjaxWrapperViewHelperTest extends FunctionalTestCase
         $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check30.txt');
         $result = $this->standAloneViewHelper->render();
 
-        static::assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
     //=============================================
 
@@ -210,7 +210,7 @@ class AjaxWrapperViewHelperTest extends FunctionalTestCase
         $expected = file_get_contents(self::FIXTURE_PATH . '/Expected/Check40.txt');
         $result = $this->standAloneViewHelper->render();
 
-        static::assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
     //=============================================
 

@@ -78,7 +78,7 @@ class DomUtilityTest extends UnitTestCase
 
         $this->ajaxHelper->setContentUid(55);
         $result = $this->subject::setAjaxAttributesToElements($source, $this->ajaxHelper, 99, 'replace');
-        static::assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -101,7 +101,7 @@ class DomUtilityTest extends UnitTestCase
 
         $this->ajaxHelper->setContentUid(55);
         $result = $this->subject::setAjaxAttributesToElements($source, $this->ajaxHelper, 99, 'replace');
-        static::assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
 
@@ -125,7 +125,7 @@ class DomUtilityTest extends UnitTestCase
         $this->ajaxHelper->setContentUid(55);
 
         $result = $this->subject::setAjaxAttributesToElements($source, $this->ajaxHelper, 99, 'replace');
-        static::assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
 
@@ -149,7 +149,7 @@ class DomUtilityTest extends UnitTestCase
         $this->ajaxHelper->setContentUid(55);
 
         $result = $this->subject::setAjaxAttributesToElements($source, $this->ajaxHelper, 99, 'replace');
-        static::assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
 
@@ -172,11 +172,11 @@ class DomUtilityTest extends UnitTestCase
          */
         $source = file_get_contents(self::FIXTURE_PATH . '/Source/Check40.txt');
         $result = $this->subject::getElementsByAjaxAttributes($source);
-        static::assertCount(2, $result);
-        static::assertInstanceOf(\DOMElement::class, $result[0]);
-        static::assertInstanceOf(\DOMElement::class, $result[1]);
-        static::assertEquals('773bc02ea02b903280d609bb6a883735afbd7f14-1', $result[0]->getAttribute('id'));
-        static::assertEquals('773bc02ea02b903280d609bb6a883735afbd7f14-2', $result[1]->getAttribute('id'));
+        self::assertCount(2, $result);
+        self::assertInstanceOf(\DOMElement::class, $result[0]);
+        self::assertInstanceOf(\DOMElement::class, $result[1]);
+        self::assertEquals('773bc02ea02b903280d609bb6a883735afbd7f14-1', $result[0]->getAttribute('id'));
+        self::assertEquals('773bc02ea02b903280d609bb6a883735afbd7f14-2', $result[1]->getAttribute('id'));
 
     }
 
@@ -197,9 +197,9 @@ class DomUtilityTest extends UnitTestCase
          */
         $source = file_get_contents(self::FIXTURE_PATH . '/Source/Check50.txt');
         $result = $this->subject::getElementsByAjaxAttributes($source);
-        static::assertCount(1, $result);
-        static::assertInstanceOf(\DOMElement::class, $result[0]);
-        static::assertEquals('773bc02ea02b903280d609bb6a883735afbd7f14-2', $result[0]->getAttribute('id'));
+        self::assertCount(1, $result);
+        self::assertInstanceOf(\DOMElement::class, $result[0]);
+        self::assertEquals('773bc02ea02b903280d609bb6a883735afbd7f14-2', $result[0]->getAttribute('id'));
 
     }
     //=============================================
@@ -220,8 +220,8 @@ class DomUtilityTest extends UnitTestCase
          */
         $source = file_get_contents(self::FIXTURE_PATH . '/Source/Check80.txt');
         $result = $this->subject::getElementById($source, '773bc02ea02b903280d609bb6a883735afbd7f14-1');
-        static::assertInstanceOf(\DOMElement::class, $result);
-        static::assertEquals('773bc02ea02b903280d609bb6a883735afbd7f14-1', $result->getAttribute('id'));
+        self::assertInstanceOf(\DOMElement::class, $result);
+        self::assertEquals('773bc02ea02b903280d609bb6a883735afbd7f14-1', $result->getAttribute('id'));
 
     }
 
@@ -241,7 +241,7 @@ class DomUtilityTest extends UnitTestCase
          */
         $source = file_get_contents(self::FIXTURE_PATH . '/Source/Check90.txt');
         $result = $this->subject::getElementById($source, '773bc02ea02b903280d609bb6a883735afbd7f14-1');
-        static::assertNull($result);
+        self::assertNull($result);
 
     }
 
@@ -268,7 +268,7 @@ class DomUtilityTest extends UnitTestCase
         $doc = $htmlObject->loadHTML($source);
 
         $result = $this->subject::getInnerHtml($doc->getElementsByTagName('body')->item(0));
-        static::assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
 
     }
 
@@ -293,7 +293,7 @@ class DomUtilityTest extends UnitTestCase
         $doc = $htmlObject->loadHTML($source);
 
         $result = $this->subject::getInnerHtml($doc->getElementsByTagName('body')->item(0));
-        static::assertEmpty($result);
+        self::assertEmpty($result);
 
     }
 

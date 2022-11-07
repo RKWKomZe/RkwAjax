@@ -94,8 +94,8 @@ class GeneralUtilityTest extends UnitTestCase
 
         $result = array_merge ($array1, $array2);
         $result2 = $this->subject::arrayMergeRecursiveDistinct($array1, $array2);
-        static::assertEquals($expected, $result);
-        static::assertEquals($expected, $result2);
+        self::assertEquals($expected, $result);
+        self::assertEquals($expected, $result2);
     }
 
 
@@ -160,7 +160,7 @@ class GeneralUtilityTest extends UnitTestCase
         ];
 
         $result = $this->subject::arrayMergeRecursiveDistinct($array1, $array2);
-        static::assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     //=============================================
