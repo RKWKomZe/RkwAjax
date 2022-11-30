@@ -8,7 +8,7 @@ namespace RKW\RkwAjax\Domain\Repository;
  * in the RkwTools extension, where we also need to fetch flexform data in AJAX context
  *
  * @author Maximilian Fäßler <maximilian@faesslerweb.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */

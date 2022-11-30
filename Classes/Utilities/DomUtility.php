@@ -21,7 +21,7 @@ use RKW\RkwAjax\Helper\AjaxHelper;
  * Class AjaxWrapperViewHelper
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -47,13 +47,14 @@ class DomUtility
      * @param int $ajaxId
      * @param string $ajaxAction
      * @return string
+     * @throws \DOMException
      */
     public static function setAjaxAttributesToElements(
-        $html,
+        string $html,
         AjaxHelper $ajaxHelper,
-        $ajaxId,
-        $ajaxAction = 'replace'
-    ) {
+        int $ajaxId,
+        string $ajaxAction = 'replace'
+    ): string {
 
         // load DOM without implied wrappers
         /** @var HTML5 $dom  */
@@ -107,7 +108,7 @@ class DomUtility
      * @param string $html
      * @return array
      */
-    public static function getElementsByAjaxAttributes($html) {
+    public static function getElementsByAjaxAttributes(string $html): array {
 
         // load DOM without implied wrappers
         /** @var HTML5 $dom  */
@@ -146,9 +147,10 @@ class DomUtility
      * @return \DOMElement|null
      */
     public static function getElementById(
-        $html,
-        $id
-    ) {
+        string $html,
+        string $id
+    ):? \DOMElement {
+
         // load DOM without implied wrappers
         $htmlObject = new HTML5(
             ['disable_html_ns' => true]
@@ -172,7 +174,7 @@ class DomUtility
      * @param \DOMElement $element
      * @return string
      */
-    public static function getInnerHtml(\DOMElement $element)
+    public static function getInnerHtml(\DOMElement $element): string
     {
         $innerHtml = '';
         $children = $element->childNodes;

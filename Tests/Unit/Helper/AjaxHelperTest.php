@@ -22,7 +22,7 @@ use RKW\RkwAjax\Helper\AjaxHelper;
  * AjaxHelperTest
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwMailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -206,10 +206,10 @@ class AjaxHelperTest extends UnitTestCase
          *
          * Given post variables are set
          * When the method is called
-         * Then false is returned
+         * Then true is returned
          */
         $_POST['test'] = 1;
-        self::assertFalse($this->subject->getIsPostCall());
+        self::assertTrue($this->subject->getIsPostCall());
     }
 
     //=============================================

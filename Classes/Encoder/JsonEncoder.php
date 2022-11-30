@@ -21,7 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Class JsonEncoder
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -35,10 +35,10 @@ class JsonEncoder extends AbstractJsonEncoder
      * @param string $html
      * @param array $idList
      * @param string $idPrefix
-     * @return $this
+     * @return self
      * @throws \TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException
      */
-    public function setHtmlByDom($html, array $idList, $idPrefix = '')
+    public function setHtmlByDom(string $html, array $idList, string $idPrefix = ''): self
     {
         /** @var DomUtility $domUtility */
         $domUtility = GeneralUtility::makeInstance(DomUtility::class);

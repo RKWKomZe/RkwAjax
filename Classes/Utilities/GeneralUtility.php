@@ -19,7 +19,7 @@ namespace RKW\RkwAjax\Utilities;
  * Class GeneralUtility
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -38,7 +38,7 @@ class GeneralUtility extends \TYPO3\CMS\Core\Utility\GeneralUtility
     * @author fantomx1 <fantomx1@gmail.om>
     * @author Steffen Kroggel <developer@steffenkroggel.de>
     */
-    static function arrayMergeRecursiveDistinct (array &$array1, array &$array2 )
+    static function arrayMergeRecursiveDistinct (array &$array1, array &$array2 ): array
     {
 
         $merged = $array1;

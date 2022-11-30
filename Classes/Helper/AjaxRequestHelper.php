@@ -21,7 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Class AjaxRequestHelper
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @api
@@ -38,13 +38,21 @@ class AjaxRequestHelper extends AjaxHelperAbstract
     protected $idList;
 
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->initFromGetPost();
+    }
+
 
     /**
      * Gets the idList
      *
      * @return array
      */
-    public function getIdList ()
+    public function getIdList (): array
     {
         return $this->idList;
     }
@@ -54,8 +62,9 @@ class AjaxRequestHelper extends AjaxHelperAbstract
      * Sets the idList
      *
      * @param array $idList
+     * @return void
      */
-    public function setIdList (array $idList)
+    public function setIdList (array $idList): void
     {
         $this->idList = $idList;
     }
@@ -64,8 +73,9 @@ class AjaxRequestHelper extends AjaxHelperAbstract
     /**
      * Init values based on GET-/POST-Params or on given params and settings
      *
+     * @return void
      */
-    public function initFromGetPost ()
+    public function initFromGetPost (): void
     {
         if (GeneralUtility::_GP('rkw_ajax')) {
             $values = GeneralUtility::_GP('rkw_ajax');
@@ -80,14 +90,5 @@ class AjaxRequestHelper extends AjaxHelperAbstract
                 $this->setIdList($idList);
             }
         }
-    }
-
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->initFromGetPost();
     }
 }

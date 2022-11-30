@@ -19,7 +19,7 @@ namespace RKW\RkwAjax\Domain\Model;
  * Class Content
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -32,12 +32,13 @@ class Content extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $piFlexform;
 
+
     /**
      * Returns the piFlexform
      *
      * @return string piFlexform
      */
-    public function getPiFlexform()
+    public function getPiFlexform(): string
     {
         return $this->piFlexform;
     }

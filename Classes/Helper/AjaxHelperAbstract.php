@@ -14,6 +14,8 @@ namespace RKW\RkwAjax\Helper;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Log\Logger;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 
@@ -21,7 +23,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Class AjaxHelperAbstract
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @api
@@ -37,7 +39,7 @@ abstract class AjaxHelperAbstract
      *
      * @var string
      */
-    protected $key;
+    protected $key = '';
 
 
     /**
@@ -45,7 +47,7 @@ abstract class AjaxHelperAbstract
      *
      * @var int
      */
-    protected $contentUid;
+    protected $contentUid = 0;
 
 
     /**
@@ -59,7 +61,7 @@ abstract class AjaxHelperAbstract
      *
      * @return string
      */
-    public function getKey ()
+    public function getKey (): string
     {
         return $this->key;
     }
@@ -70,7 +72,7 @@ abstract class AjaxHelperAbstract
      *
      * @param string $key
      */
-    protected function setKey (string $key)
+    protected function setKey (string $key): void
     {
         $this->key = $key;
     }
@@ -81,9 +83,9 @@ abstract class AjaxHelperAbstract
      *
      * @return int
      */
-    public function getContentUid ()
+    public function getContentUid (): int
     {
-        return intval($this->contentUid);
+        return $this->contentUid;
     }
 
 
@@ -92,9 +94,9 @@ abstract class AjaxHelperAbstract
      *
      * @param int $contentUid
      */
-    public function setContentUid (int $contentUid)
+    public function setContentUid (int $contentUid): void
     {
-        $this->contentUid = intval($contentUid);
+        $this->contentUid = $contentUid;
     }
 
 
@@ -103,7 +105,7 @@ abstract class AjaxHelperAbstract
      *
      * @return bool
      */
-    public function getIsAjaxCall ()
+    public function getIsAjaxCall (): bool
     {
         if (
             (GeneralUtility::_GP('rkw_ajax'))
@@ -125,7 +127,7 @@ abstract class AjaxHelperAbstract
      *
      * @return bool
      */
-    public function getIsPostCall ()
+    public function getIsPostCall (): bool
     {
         if ($_POST){
             return true;
@@ -140,11 +142,11 @@ abstract class AjaxHelperAbstract
      *
      * @return \TYPO3\CMS\Core\Log\Logger
      */
-    protected function getLogger()
+    protected function getLogger(): Logger
     {
 
         if (!$this->logger instanceof \TYPO3\CMS\Core\Log\Logger) {
-            $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Log\LogManager')->getLogger(__CLASS__);
+            $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
         }
 
         return $this->logger;

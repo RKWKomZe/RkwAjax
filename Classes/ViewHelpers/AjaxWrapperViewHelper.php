@@ -25,7 +25,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
  * Class AjaxWrapperViewHelper
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -67,6 +67,8 @@ class AjaxWrapperViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVi
     */
     public function initializeArguments()
     {
+        parent::initializeArguments();
+
         $this->registerArgument('value', 'string', 'HTML');
         $this->registerArgument('ajaxId', 'int', 'Id for ajax requests', true);
         $this->registerArgument('ajaxHelper', AjaxHelper::class, 'AjaxHelper- Object', true);
@@ -80,12 +82,13 @@ class AjaxWrapperViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVi
      * @param \Closure $renderChildrenClosure
      * @param \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
      * @return string
+     * @throws \DOMException
      */
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ) {
+    ): string {
 
         $value = $renderChildrenClosure();
         $ajaxId = intval($arguments['ajaxId']);

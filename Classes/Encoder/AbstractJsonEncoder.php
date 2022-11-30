@@ -19,7 +19,7 @@ namespace RKW\RkwAjax\Encoder;
  * Class AbstracJsonEncoder
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -61,9 +61,9 @@ abstract class AbstractJsonEncoder
      * Sets status
      *
      * @param integer $value
-     * @return $this
+     * @return self
      */
-    public function setStatus($value)
+    public function setStatus(int $value): self
     {
 
         if (defined(get_class($this) . '::' . $value)) {
@@ -82,9 +82,9 @@ abstract class AbstractJsonEncoder
      * @param string  $id
      * @param string  $message
      * @param integer $type
-     * @return $this
+     * @return self
      */
-    public function setMessage($id, $message, $type = 1)
+    public function setMessage(string $id, string $message, int $type = 1): self
     {
 
         if (!$message) {
@@ -111,20 +111,21 @@ abstract class AbstractJsonEncoder
      * Sets data
      *
      * @param mixed $data
-     * @return $this
+     * @return self
      */
-    public function setData($data)
+    public function setData($data): self
     {
         $this->data = $data;
         return $this;
     }
 
+
     /**
      * Unsets data
      *
-     * @return $this
+     * @return self
      */
-    public function unsetData()
+    public function unsetData(): self
     {
         $this->data = array();
         return $this;
@@ -136,7 +137,7 @@ abstract class AbstractJsonEncoder
      *
      * @return $this
      */
-    public function unsetHtml()
+    public function unsetHtml(): self
     {
         $this->html = array();
         return $this;
@@ -150,7 +151,7 @@ abstract class AbstractJsonEncoder
      * @param string $javaScript
      * @return $this
      */
-    public function setJavaScript($javaScript, $before = false)
+    public function setJavaScript(string $javaScript, bool $before = false): self
     {
 
         $target = 'after';
@@ -169,9 +170,9 @@ abstract class AbstractJsonEncoder
     /**
      * Unsets JavaScript
      *
-     * @return $this
+     * @return self
      */
-    public function unsetJavaScript()
+    public function unsetJavaScript(): self
     {
 
         $this->javaScript = array();
@@ -184,7 +185,7 @@ abstract class AbstractJsonEncoder
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
 
         $returnArray = array();

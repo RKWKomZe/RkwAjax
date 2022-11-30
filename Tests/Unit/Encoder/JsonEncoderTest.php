@@ -26,7 +26,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  * JsonEncoderTest
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwMailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -56,11 +56,12 @@ class JsonEncoderTest extends UnitTestCase
 
     /**
      * @todo
+     * @test
      */
     public function testing ()
     {
 
-
+        self::assertEquals(1, 1);
     }
 
 

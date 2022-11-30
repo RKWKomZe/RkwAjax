@@ -14,12 +14,14 @@ namespace RKW\RkwAjax\Helper;
  * The TYPO3 project - inspiring people to share!
  */
 
+use RKW\RkwAjax\Controller\AjaxControllerInterface;
+
 
 /**
  * Class AjaxHelper
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @api
@@ -41,7 +43,7 @@ class AjaxHelper extends AjaxHelperAbstract
      *
      * @return string
      */
-    public function getKey ()
+    public function getKey (): string
     {
         if (! $this->key) {
             $this->calculateKey();
@@ -53,8 +55,10 @@ class AjaxHelper extends AjaxHelperAbstract
 
     /**
      * Calculates the key
+     *
+     * @return void
      */
-    protected function calculateKey ()
+    protected function calculateKey (): void
     {
 
         $plaintextKey = $this->getContentUid();
@@ -90,7 +94,7 @@ class AjaxHelper extends AjaxHelperAbstract
      *
      * @return \RKW\RkwAjax\Controller\AjaxControllerInterface
      */
-    public function getFrontendController ()
+    public function getFrontendController ():? AjaxControllerInterface
     {
         return $this->frontendController;
     }
@@ -99,9 +103,10 @@ class AjaxHelper extends AjaxHelperAbstract
     /**
      * Sets the frontend controller
      *
-     * @param \RKW\RkwAjax\Controller\AjaxControllerInterface
+     * @param \RKW\RkwAjax\Controller\AjaxControllerInterface $frontendController
+     * @return void
      */
-    public function setFrontendController (\RKW\RkwAjax\Controller\AjaxControllerInterface $frontendController)
+    public function setFrontendController (AjaxControllerInterface $frontendController): void
     {
 
         $this->frontendController = $frontendController;

@@ -19,14 +19,12 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use RKW\RkwAjax\Utilities\GeneralUtility as GeneralUtility;
 
-use RKW\RkwAjax\Domain\Repository\ContentRepository;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class AjaxAbstractController
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @api

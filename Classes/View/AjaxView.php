@@ -14,15 +14,16 @@ namespace RKW\RkwAjax\View;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use RKW\RkwAjax\Helper\AjaxHelper;
+use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Extbase\Mvc\Web\Response;
-use \TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**
  * Class AjaxView
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwAjax
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -59,8 +60,9 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
 
     /**
      * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+     * @return void
      */
-    public function injectObjectManager(ObjectManagerInterface $objectManager)
+    public function injectObjectManager(ObjectManagerInterface $objectManager): void
     {
         $this->objectManager = $objectManager;
     }
@@ -68,9 +70,11 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
 
     /**
      * Set AjaxHelper to view
+     *
      * @param \RKW\RkwAjax\Helper\AjaxHelper $ajaxHelper
+     * @return void
      */
-    public function setAjaxHelper( \RKW\RkwAjax\Helper\AjaxHelper $ajaxHelper)
+    public function setAjaxHelper(AjaxHelper $ajaxHelper): void
     {
         $this->ajaxHelper = $ajaxHelper;
         $this->assign('ajaxHelper', $this->ajaxHelper);
@@ -97,7 +101,7 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
                 sprintf(
                     'Ajax-Call with ajaxKey "%s" and ajaxIdList "%s" for view detected.',
                     $this->ajaxRequestHelper->getKey(),
-                    $this->ajaxRequestHelper->getIdList()
+                    implode(',', $this->ajaxRequestHelper->getIdList())
                 )
             );
 
@@ -128,8 +132,9 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
      * Send response to browser
      *
      * @param string $data The response data
+     * @return void
      */
-    protected function sendResponse($data)
+    protected function sendResponse(string $data): void
     {
         $response = $this->objectManager->get(Response::class);
         $response->setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -145,7 +150,7 @@ class AjaxView extends \TYPO3\CMS\Fluid\View\TemplateView
      *
      * @return \TYPO3\CMS\Core\Log\Logger
      */
-    protected function getLogger()
+    protected function getLogger(): Logger
     {
 
         if (!$this->logger instanceof \TYPO3\CMS\Core\Log\Logger) {
